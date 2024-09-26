@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
     /* Логика */
     fscanf(file_input, "%hd%hd%hd%d", &hour, &minute, &second, &delta);
     time = 3600 * hour + 60 * minute + second + delta;
-    hour = time / 3600 % 60;
+    hour = (time / 3600 % 60) % 24;
     minute = time / 60 % 60;
     second = time % 60;
     

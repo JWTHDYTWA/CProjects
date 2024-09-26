@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define u64 unsigned long long
+#define u32 unsigned long
+
 char buffer[32];
 int main(int argc, char const *argv[])
 {
     /* Переменные */
-    
-    unsigned long long max_vol;
-    unsigned i = 0;
-    unsigned long long variants;
+
+    u64 max_vol;
+    unsigned long long variants = 0;
 
     /* Открытие файлов */
 
@@ -22,15 +24,24 @@ int main(int argc, char const *argv[])
     }
 
     /* Логика */
+    
     fscanf(file_input, "%lld", &max_vol);
-    while (max_vol > 0)
+
+    for (int a = 1; a * a * a <= max_vol; a++)
     {
-        variants += max_vol /= 2; // ДОДЕЛАТЬ ДО 10.09
+        for (int b = a; a * b * b <= max_vol; b++)
+        {
+            int max_c = max_vol / (a * b);
+            if (max_c >= b)
+            {
+                variants += (max_c - b + 1);
+            }
+        }
     }
     
     /* Вывод и закрытие файлов */
     
-    fprintf(file_output, "%lld", hour, minute, second);
+    fprintf(file_output, "%lld", variants);
     fclose(file_input);
     fclose(file_output);
     return 0;

@@ -8,18 +8,18 @@ int main(int argc, char const *argv[])
 
     /* Открытие файлов */
 
-    FILE * file_input = fopen("input.txt", "r");
-    FILE * file_output = fopen("output.txt", "w");
+    // FILE * file_input = fopen("input.txt", "r");
+    // FILE * file_output = fopen("output.txt", "w");
 
-    if (file_input == NULL ||  file_output == NULL)
+    /* if (file_input == NULL ||  file_output == NULL)
     {
         perror("File error");
         return 1;
-    }
+    } */
 
     /* Логика */
     
-    printf("%d", a * b);
+    printf("%d", 2^3);
     
     /* Вывод и закрытие файлов */
     
