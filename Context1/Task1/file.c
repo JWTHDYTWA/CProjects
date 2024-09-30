@@ -4,7 +4,6 @@ int main(int argc, char const *argv[])
 {
     /* Переменные */
 
-    char buffer[33];
     int count;
     int sum = 0;
 
