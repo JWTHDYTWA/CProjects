@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #define u64 unsigned long long
-#define u32 unsigned long
+#define u32 unsigned int
 
 FILE * file_input;
 FILE * file_output;
