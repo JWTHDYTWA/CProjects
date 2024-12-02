@@ -1,5 +1,14 @@
 #include <stdio.h>
 #include <math.h>
+
+typedef struct
+{
+    char a;
+    short b;
+    int c;
+} block;
+
+
 int main(int argc, char const *argv[])
 {
     /* Переменные */
@@ -20,10 +29,10 @@ int main(int argc, char const *argv[])
 
     /* Логика */
     
-    do {
-        tmp = fscanf(file_input, "%c", &a);
-        fprintf(file_output, "%d:\"%c\" ", tmp, a);
-    } while (tmp != EOF);
+    block A = { 127, 32765, 69 };
+    block B;
+    B = A;
+    printf("%d %d %d", B.a, B.b, B.c);;
     
     /* Вывод и закрытие файлов */
     
