@@ -1,20 +1,25 @@
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
-typedef struct
+int binomial(int k, int n)
 {
-    char a;
-    short b;
-    int c;
-} block;
-
+    if (k == 0 || k == n)
+        return 1;
+    else
+        return binomial(k, n-1) + binomial(k-1, n-1);
+}
 
 int main(int argc, char const *argv[])
 {
     /* Переменные */
     
-    char a;
-    int tmp;
+    int K;
+    int N;
+    int C;
+
+    int a;
+    int b;
 
     /* Открытие файлов */
 
@@ -29,10 +34,12 @@ int main(int argc, char const *argv[])
 
     /* Логика */
     
-    block A = { 127, 32765, 69 };
-    block B;
-    B = A;
-    printf("%d %d %d", B.a, B.b, B.c);;
+    printf("Enter k, n: ");
+    scanf("%d%d", &K, &N);
+    a = clock();
+    C = binomial(K, N);
+    b = clock();
+    printf("%d - Time taken: %ld ms", C, b - a);
     
     /* Вывод и закрытие файлов */
     
