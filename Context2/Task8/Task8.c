@@ -63,6 +63,13 @@ int toDays(int day, int month, int year)
     return days;
 }
 
+int toYears(int days)
+{
+    days -= 
+    int year = days / 365;
+    
+}
+
 int leapCount(int year)
 {
     int days = 0;
