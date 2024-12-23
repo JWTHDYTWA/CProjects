@@ -24,6 +24,7 @@ int init();
 void deinit();
 int findUnused(Node* f);
 void fastFlush(Node *f);
+void fullFlush(Node *f);
 
 Node field[FLDSIZE];
 int F;
@@ -41,6 +42,7 @@ int main(int argc, char const *argv[])
 
     /* Логика */
     
+    // Предварительное освобождение списка
     for (int i = 0; i < FLDSIZE; i++)
     {
         field[i].next = UNUSED;
@@ -53,47 +55,62 @@ int main(int argc, char const *argv[])
         fscanf(file_input, "%d%d%d", &N, &F, &Q);
         for (int j = 0; j < N; j++) // Заполнение списка из Input | И
         {
-            fscanf(file_input, "%s%d", &field[j].str, &field[j].next);
-            if (&field[j].next == -1) M = j;
+            fscanf(file_input, "%s%d", field[j].str, &field[j].next);
         }
-        for (int i = 0; i < Q; i++) // Обработка операций
+        for (int k = 0; k < Q; k++) // Обработка операций
         {
-            char op, id;
+            int op, id;
             fscanf(file_input, "%d%d", &op, &id);
 
             if (op) // Удаление
             {
-                if (id == -1)
+                if (id == LIST_END)
                 {
                     int old = F;
                     F = field[F].next;
-                    field[old].next = UNUSED;
+                    // field[old].next = UNUSED;
+                    fprintf(file_output, "%s\n", field[old].str);
                 }
                 else
                 {
                     int next = field[id].next;
                     field[id].next = field[next].next;
-                    field[next].next = UNUSED;
+                    // field[next].next = UNUSED;
+                    fprintf(file_output, "%s\n", field[next].str);
                 }
             }
             else // Вставка
             {
-                if (id == -1)
+                if (id == LIST_END)
                 {
                     int sec = F;
                     F = findUnused(field);
                     field[F].next = sec;
                     fscanf(file_input, "%s", field[F].str);
+                    fprintf(file_output, "%d\n", F);
                 }
                 else
                 {
+                    int foll = field[id].next;
                     int new = field[id].next = findUnused(field);
-                    field[new].next = -1;
+                    field[new].next = foll;
                     fscanf(file_input, "%s", field[new].str);
+                    fprintf(file_output, "%d\n", new);
                 }
             }
         }
-        fastFlush(field);
+
+        fprintf(file_output, "===\n");
+
+        for (int cur = F; cur != LIST_END; cur = field[cur].next)
+        {
+            fprintf(file_output, "%s\n", field[cur].str);
+        }
+
+        fprintf(file_output, "===\n");
+
+        // fastFlush(field);
+        fullFlush(field);
     }
     
     
@@ -135,6 +152,14 @@ int findUnused(Node* f)
 void fastFlush(Node *f)
 {
     for (int i = 0; i < FLDSIZE && f[i].next != UNUSED; i++)
+    {
+        f[i].next = UNUSED;
+    }
+}
+
+void fullFlush(Node *f)
+{
+    for (int i = 0; i < FLDSIZE; i++)
     {
         f[i].next = UNUSED;
     }
