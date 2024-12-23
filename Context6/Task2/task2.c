@@ -9,27 +9,31 @@
 #define ADD 0
 #define DEL 1
 
+#define LIST_END -1
+#define UNUSED -2
+
 FILE * file_input;
 FILE * file_output;
 
 typedef struct {
     char str[8];
-    char used;
     int next;
 } Node;
 
 int init();
 void deinit();
 int findUnused(Node* f);
+void fastFlush(Node *f);
 
 Node field[FLDSIZE];
+int F;
 
 int main(int argc, char const *argv[])
 {
     /* Переменные */
     
     memset(field, 0, sizeof(field));
-    int T, N, F, Q;
+    int T, N, Q;
     int M; // Посл. элем.
 
     /* Открытие файлов */
@@ -37,67 +41,59 @@ int main(int argc, char const *argv[])
 
     /* Логика */
     
+    for (int i = 0; i < FLDSIZE; i++)
+    {
+        field[i].next = UNUSED;
+    }
+
     fscanf(file_input, "%d", &T);
 
     for (int i = 0; i < T; i++) // T - Тесты
     {
         fscanf(file_input, "%d%d%d", &N, &F, &Q);
-        for (int j = 0; j < N; j++) // Заполнение списка из Input
+        for (int j = 0; j < N; j++) // Заполнение списка из Input | И
         {
             fscanf(file_input, "%s%d", &field[j].str, &field[j].next);
-            field[j].used = 1;
             if (&field[j].next == -1) M = j;
         }
         for (int i = 0; i < Q; i++) // Обработка операций
         {
-            char op, index;
-            fscanf(file_input, "%d%d", &op, &index);
-
-            int pred = F, cur;
-
-            if (index == F)
-            {
-                cur = field[F].next;
-            }
-            else
-            {
-                while (field[pred].next != index && field[pred].next != -1)
-                {
-                    pred = field[pred].next;
-                }
-                cur = field[pred].next;
-            }
+            char op, id;
+            fscanf(file_input, "%d%d", &op, &id);
 
             if (op) // Удаление
             {
-                if (index == F)
+                if (id == -1)
                 {
-                    F = cur;
-                }
-                else if (index == -1)
-                {
-                    field[pred]
+                    int old = F;
+                    F = field[F].next;
+                    field[old].next = UNUSED;
                 }
                 else
                 {
-                    field[pred].next = field[cur].next;
+                    int next = field[id].next;
+                    field[id].next = field[next].next;
+                    field[next].next = UNUSED;
                 }
             }
             else // Вставка
             {
-                if (index == F)
+                if (id == -1)
                 {
-                    F = cur;
+                    int sec = F;
+                    F = findUnused(field);
+                    field[F].next = sec;
+                    fscanf(file_input, "%s", field[F].str);
                 }
-                else if (index == -1)
+                else
                 {
-
+                    int new = field[id].next = findUnused(field);
+                    field[new].next = -1;
+                    fscanf(file_input, "%s", field[new].str);
                 }
-                fscanf(file_input, "%s", field[index].str);
-                field[pred].next = 
             }
         }
-        
+        fastFlush(field);
     }
     
     
@@ -128,11 +124,18 @@ int findUnused(Node* f)
 {
     for (int i = 0; i < FLDSIZE; i++)
     {
-        if (!f[i].used)
+        if (f[i].next == UNUSED)
         {
             return i;
         }
-        
     }
-    return -1
+    return -1;
+}
+
+void fastFlush(Node *f)
+{
+    for (int i = 0; i < FLDSIZE && f[i].next != UNUSED; i++)
+    {
+        f[i].next = UNUSED;
+    }
 }

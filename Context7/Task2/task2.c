@@ -19,7 +19,7 @@ int bitsetGet ( const bitword * arr , int idx );
 void bitsetSet ( bitword * arr , int idx , int newval );
 int bitsetAny ( const bitword * arr , int left , int right );
 
-bitword *field;
+bitword *field = NULL;
 int fieldlen = 0;
 
 int main(int argc, char const *argv[])
@@ -43,16 +43,25 @@ int main(int argc, char const *argv[])
         case 0:
             if (a1 > fieldlen)
             {
-                /* code */
+                field = realloc(field, (a1 - 1) / sizeof(bitword) + 1);
+                fieldlen = a1;
             }
-            
             bitsetZero(field, a1);
             break;
-        
+        case 1:
+            fprintf(file_output, "%d\n", bitsetGet(field, a1));
+            break;
+        case 2:
+            fscanf(file_input, "%d", &a2);
+            bitsetSet(field, a1, a2);
+            break;
+        case 3:
+            fscanf(file_input, "%d", &a2);
+            fprintf(file_output, "%s\n", bitsetAny(field, a1, a2) ? "some" : "none");
+            break;
         default:
             break;
         }
-        
     }
     
     
