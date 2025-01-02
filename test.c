@@ -2,14 +2,6 @@
 #include <math.h>
 #include <time.h>
 
-int binomial(int k, int n)
-{
-    if (k == 0 || k == n)
-        return 1;
-    else
-        return binomial(k, n-1) + binomial(k-1, n-1);
-}
-
 int main(int argc, char const *argv[])
 {
     /* Переменные */
@@ -18,7 +10,7 @@ int main(int argc, char const *argv[])
     int N;
     int C;
 
-    int a;
+    int lastTs;
     int b;
 
     /* Открытие файлов */
@@ -34,12 +26,16 @@ int main(int argc, char const *argv[])
 
     /* Логика */
     
-    printf("Enter k, n: ");
-    scanf("%d%d", &K, &N);
-    a = clock();
-    C = binomial(K, N);
-    b = clock();
-    printf("%d - Time taken: %ld ms", C, b - a);
+    for (int i = 0; i < 60; i++)
+    {
+        lastTs = clock();
+        int cnt = 0;
+        while (clock() - lastTs < 1000)
+        {
+            cnt++;
+        }
+        printf("%d second: %d cycles\n", i+1, cnt);
+    }
     
     /* Вывод и закрытие файлов */
     
