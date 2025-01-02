@@ -28,6 +28,7 @@ void fullFlush(Node *f);
 
 Node field[FLDSIZE];
 int F;
+int selector = 0;
 
 int main(int argc, char const *argv[])
 {
@@ -139,14 +140,20 @@ void deinit()
 
 int findUnused(Node* f)
 {
-    for (int i = 0; i < FLDSIZE; i++)
+    // for (int i = 0; i < FLDSIZE; i++)
+    // {
+    //     if (f[i].next == UNUSED)
+    //     {
+    //         return i;
+    //     }
+    // }
+    // return -1;
+
+    while (f[selector].next != UNUSED)
     {
-        if (f[i].next == UNUSED)
-        {
-            return i;
-        }
+        selector = (selector + 1) % FLDSIZE;
     }
-    return -1;
+    return selector;
 }
 
 void fastFlush(Node *f)

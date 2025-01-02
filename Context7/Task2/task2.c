@@ -1,8 +1,9 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 #define u64 unsigned long long
 #define u32 unsigned int
+
+#define UINT_MAX 4294967295
 
 typedef unsigned int bitword;
 
@@ -19,7 +20,8 @@ int bitsetGet ( const bitword * arr , int idx );
 void bitsetSet ( bitword * arr , int idx , int newval );
 int bitsetAny ( const bitword * arr , int left , int right );
 
-bitword *field = NULL;
+// bitword *field = NULL;
+bitword field[1000000];
 int fieldlen = 0;
 
 int main(int argc, char const *argv[])
@@ -41,11 +43,11 @@ int main(int argc, char const *argv[])
         switch (op)
         {
         case 0:
-            if (a1 > fieldlen)
-            {
-                field = realloc(field, (a1 - 1) / sizeof(bitword) + 1);
-                fieldlen = a1;
-            }
+            // if (a1 > fieldlen)
+            // {
+            //     field = realloc(field, (a1 - 1) / sizeof(bitword) + 1);
+            //     fieldlen = a1;
+            // }
             bitsetZero(field, a1);
             break;
         case 1:

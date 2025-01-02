@@ -43,7 +43,7 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < Num; i++)
     {
         fscanf(file_input, "%d%d", &N, &K);
-        fprintf(file_output, "%.10g\r\n", Pascal[N][K]);
+        fprintf(file_output, "%.15g\r\n", Pascal[N][K]);
     }
     
     

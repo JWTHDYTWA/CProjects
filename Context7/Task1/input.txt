@@ -3,8 +3,9 @@
 3 qwerty
 3 string
 6 good
+8 aboba
 1 a
 3 ab
 2 hello
-1 zaebal
+1 bipki
 5 world

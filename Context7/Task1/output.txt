@@ -1,9 +1,9 @@
 1 a
-1 zaebal
+1 bipki
 2 hello
 3 qwerty
 3 string
 3 ab
-5 world
 6 good
+8 aboba
 800 aboba
