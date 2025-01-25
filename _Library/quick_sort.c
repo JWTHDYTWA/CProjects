@@ -19,7 +19,6 @@ void myqsort(int *arr, int left, int right)
                 L++;
                 R--;
             }
-            
         }
         
         myqsort(arr, left, R);
