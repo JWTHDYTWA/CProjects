@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define u64 unsigned long long
 #define u32 unsigned int
@@ -14,15 +15,17 @@ int main(int argc, char const *argv[])
 {
     /* Переменные */
     
-    
+    double Inf = INFINITY;
+    int X = 5;
 
     /* Открытие файлов */
     if (init() < 0) return -1;
 
     /* Логика */
     
-    printf("%d", (-1 + 100) % 100);
-    
+    X = X++ + ++X;
+    printf("%llf", Inf / 1e300);
+
     /* Вывод и закрытие файлов */
     deinit();
     return 0;
