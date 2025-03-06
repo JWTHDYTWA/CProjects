@@ -10,6 +10,8 @@ FILE * file_output;
 
 int init();
 void deinit();
+u32 gcd(u32 a, u32 b);
+int mod(int x, int y);
 
 int main(int argc, char const *argv[])
 {
@@ -23,9 +25,8 @@ int main(int argc, char const *argv[])
 
     /* Логика */
     
-    X = X++ + ++X;
-    printf("%llf", Inf / 1e300);
-
+    printf("%d", gcd(600,8822) );
+    
     /* Вывод и закрытие файлов */
     deinit();
     return 0;
@@ -47,4 +48,21 @@ void deinit()
 {
     fclose(file_input);
     fclose(file_output);
+}
+
+u32 gcd(u32 a, u32 b)
+{
+    if (a == 0)
+    {
+        return b;
+    }
+    else
+    {
+        return gcd(b%a, a);
+    }
+}
+
+int mod(int x, int y)
+{
+    
 }
