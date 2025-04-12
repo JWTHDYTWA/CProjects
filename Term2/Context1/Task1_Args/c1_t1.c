@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define u64 unsigned long long
 #define u32 unsigned int
@@ -16,6 +15,7 @@ FILE * file_output;
 
 int init();
 void deinit();
+int match(const char *str1, const char *str2);
 
 int main(int argc, char const *argv[])
 {
@@ -25,42 +25,34 @@ int main(int argc, char const *argv[])
     long long a, b, m, op, res = 0;
 
     /* Открытие файлов */
-    // if (init() < 0) return -1;
 
     /* Логика */
 
     if (argc == 1)
     {
         fprintf(stderr, "No parameters specified.");
-        return -1;
+        return 13;
     }
-
-    // for (size_t i = 1; i < argc; i++)
-    // {
-    //     printf("%s ", argv[i]);
-    // }
-    // printf("\n");
-    
     
     for (size_t i = 1; i < argc; i++)
     {
-        if (strcmp(argv[i], "-m") == 0)
+        if (match(argv[i], "-m"))
         {
             sscanf(argv[++i], "%lld", &m);
         }
-        else if (strcmp(argv[i], "add") == 0)
+        else if (match(argv[i], "add"))
         {
             sscanf(argv[++i], "%lld", &a);
             sscanf(argv[++i], "%lld", &b);
             op = ADD;
         }
-        else if (strcmp(argv[i], "sub") == 0)
+        else if (match(argv[i], "sub"))
         {
             sscanf(argv[++i], "%lld", &a);
             sscanf(argv[++i], "%lld", &b);
             op = SUB;
         }
-        else if (strcmp(argv[i], "mul") == 0)
+        else if (match(argv[i], "mul"))
         {
             sscanf(argv[++i], "%lld", &a);
             sscanf(argv[++i], "%lld", &b);
@@ -92,7 +84,6 @@ int main(int argc, char const *argv[])
     printf("%lld", res);
 
     /* Вывод и закрытие файлов */
-    deinit();
     return 0;
 }
 
@@ -112,4 +103,18 @@ void deinit()
 {
     fclose(file_input);
     fclose(file_output);
+}
+
+int match(const char *str1, const char *str2)
+{
+    while (*str1 != '\0' && *str2 != '\0')
+    {
+        if (*str1 != *str2)
+        {
+            return 0;
+        }
+        str1++;
+        str2++;
+    }
+    return 1;
 }
